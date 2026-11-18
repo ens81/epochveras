@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 225 14% 90%;
+    --card: 0 0% 4%;
+    --card-foreground: 225 14% 90%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 225 14% 90%;
+    --primary: 225 14% 90%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 225 14% 90%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 228 6% 50%;
+    --accent: 0 0% 11%;
+    --accent-foreground: 225 14% 90%;
+    --destructive: 355 88% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.1;
+    --ring: 0 0% 60%;
+    --radius: 0.2rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html, body, #root { height: 100%; background: #000; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+}
+
+.font-mono-num { font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif; font-variant-numeric: tabular-nums; }
+.flash-up { animation: flashUp 900ms ease-out; }
+.flash-down { animation: flashDown 900ms ease-out; }
+@keyframes flashUp { 0% { color: #089981; background: rgba(8,153,129,0.22); } 70% { color: #089981; } 100% { color: inherit; background: transparent; } }
+@keyframes flashDown { 0% { color: #F23645; background: rgba(242,54,69,0.22); } 70% { color: #F23645; } 100% { color: inherit; background: transparent; } }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #1C1C1E; }
+::-webkit-scrollbar-track { background: transparent; }
+::selection { background: rgba(41, 98, 255, 0.35); }
+.alarm-tag { box-shadow: 0 0 0 1px rgba(0,0,0,0.6); }
+.sheet-in { animation: sheetIn 220ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes sheetIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+button { -webkit-tap-highlight-color: transparent; }
+.chart-legend { font-size: 12px; line-height: 19px; color: #B2B5BE; font-variant-numeric: tabular-nums; text-shadow: 0 0 3px #000; }
+.chart-legend .lg-title { color: #E0E3EB; font-size: 13px; }
+.chart-legend b { font-weight: 400; }
