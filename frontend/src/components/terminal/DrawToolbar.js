@@ -13,6 +13,7 @@ const LongIcon = Template("#089981", "#F23645");
 const ShortIcon = Template("#F23645", "#089981");
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../ui/tooltip";
 
+
 const TOOLS = [
   ["cursor", Crosshair, "İmleç"],
   ["trendline", Slash, "Trendline"],
