@@ -19,6 +19,7 @@ export function ema(src, len, alpha = 2 / (len + 1)) {
 
 export const rma = (src, len) => ema(src, len, 1 / len);
 
+
 export function sma(src, len) {
   const out = nanArr(src.length);
   let sum = 0, cnt = 0;
