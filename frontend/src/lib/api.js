@@ -5,13 +5,8 @@ export const API = `${BACKEND_URL}/api`;
 export const CLIENT_ID = (window.crypto?.randomUUID?.() || String(Math.random())).slice(0, 36);
 
 export const http = axios.create({ baseURL: API });
-let tokenGetter = null;
-export const setTokenGetter = (fn) => { tokenGetter = fn; };
-export const getToken = () => (tokenGetter ? tokenGetter() : null);
 
-http.interceptors.request.use(async (cfg) => {
-  const t = tokenGetter ? await tokenGetter() : null;
-  if (t) cfg.headers.Authorization = `Bearer ${t}`;
+http.interceptors.request.use((cfg) => {
   cfg.headers["X-Client-Id"] = CLIENT_ID;
   return cfg;
 });
