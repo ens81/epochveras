@@ -127,3 +127,4 @@ export default function Watchlist({ symbols, tickers, favorites, onFavorites, sy
     </div>
   );
 }
+
