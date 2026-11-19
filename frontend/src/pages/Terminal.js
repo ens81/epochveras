@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useAuth } from "@clerk/react";
 import { toast } from "sonner";
 import { X } from "lucide-react";
-import { http, setTokenGetter, BACKEND_URL, CLIENT_ID, fmtPrice } from "../lib/api";
+import { http, BACKEND_URL, CLIENT_ID, fmtPrice } from "../lib/api";
 import { market } from "../lib/stream";
 import { beep, refreshPushIfGranted } from "../lib/notify";
 import { EPOCH_DEFAULTS } from "../lib/epoch";
@@ -42,8 +41,6 @@ function useTickers() {
 }
 
 export default function Terminal() {
-  const { getToken } = useAuth();
-  setTokenGetter(getToken);
   const [symbols, setSymbols] = useState([]);
   const [settings, setSettings] = useState(null);
   const [drawings, setDrawings] = useState([]);
@@ -101,10 +98,9 @@ export default function Terminal() {
   // cross-device sync socket
   useEffect(() => {
     let ws, closed = false, retry;
-    const connect = async () => {
-      const token = await getToken();
-      if (closed || !token) return;
-      ws = new WebSocket(`${BACKEND_URL.replace(/^http/, "ws")}/api/ws?token=${token}&client_id=${CLIENT_ID}`);
+    const connect = () => {
+      if (closed || !BACKEND_URL) return;
+      ws = new WebSocket(`${BACKEND_URL.replace(/^http/, "ws")}/api/ws?client_id=${CLIENT_ID}`);
       ws.onmessage = (ev) => {
         const m = JSON.parse(ev.data);
         if (m.type === "settings") loadSettings();
@@ -123,7 +119,7 @@ export default function Terminal() {
     connect();
     const ping = setInterval(() => ws && ws.readyState === 1 && ws.send("ping"), 25000);
     return () => { closed = true; clearTimeout(retry); clearInterval(ping); ws && ws.close(); };
-  }, [getToken, loadSettings, loadAlarms]);
+  }, [loadSettings, loadAlarms]);
 
   useEffect(() => { setSelectedId(null); setTool("cursor"); }, [symbol, tf]);
   const t = tickers[symbol];
@@ -205,4 +201,3 @@ export default function Terminal() {
     </div>
   );
 }
-
