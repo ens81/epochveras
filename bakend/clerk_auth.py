@@ -14,4 +14,3 @@ def require_user(request: Request) -> dict:
         "session_id": "local_session",
         "claims": {"sub": user_id},
     }
-
