@@ -13,7 +13,6 @@ function label(ctx, text, x, y, color, above, size = 10) {
 }
 
 
-
 // Pine label.style_label_down / style_label_up: filled box with a pointer towards the bar
 function pinLabel(ctx, text, x, y, color, above, size = 10) {
   ctx.font = `600 ${size}px -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif`;
