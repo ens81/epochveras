@@ -9,6 +9,7 @@ import { drawEpoch, drawCloud, drawDrawings, drawRuler } from "../../lib/overlay
 import RsiPane from "./RsiPane";
 import MtfTables from "./MtfTables";
 
+
 const SWATCHES = ["#E0E3EB", "#787B86", "#2962FF", "#089981", "#F23645", "#F5A623", "#AB47BC", "#00BCD4", "#FFEB3B"];
 const pad = (n) => String(n).padStart(2, "0");
 const fmtTime = (t) => { const d = new Date(t * 1000); return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${String(d.getFullYear()).slice(2)} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
