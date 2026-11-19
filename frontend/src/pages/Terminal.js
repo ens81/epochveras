@@ -29,7 +29,16 @@ function useTickers() {
   const ref = useRef({});
   const [tickers, setTickers] = useState({});
   useEffect(() => {
-    const load = () => http.get("/market/tickers").then(({ data }) => { Object.entries(data).forEach(([s, t]) => { ref.current[s] = { ...ref.current[s], ...t }; }); });
+    const load = () =>
+      http
+        .get("/market/tickers")
+        .then(({ data }) => {
+          if (!data || typeof data !== "object") return;
+          Object.entries(data).forEach(([s, t]) => {
+            ref.current[s] = { ...ref.current[s], ...t };
+          });
+        })
+        .catch(() => {});
     load();
     const u1 = market.subscribe("!ticker@arr", (arr) => arr.forEach((t) => { ref.current[t.s] = { ...ref.current[t.s], c: t.c, P: t.P, qv: t.q }; }));
     const u2 = market.subscribe("!markPrice@arr@1s", (arr) => arr.forEach((t) => { ref.current[t.s] = { ...ref.current[t.s], r: t.r, T: t.T }; }));
@@ -72,8 +81,20 @@ export default function Terminal() {
   symMapRef.current = symMap;
   soundRef.current = settings?.sound !== false;
 
-  const loadSettings = useCallback(() => http.get("/settings").then(({ data }) => setSettings(data)), []);
-  const loadAlarms = useCallback(() => http.get("/alarms").then(({ data }) => setAlarms(data)), []);
+  const loadSettings = useCallback(
+    () => http.get("/settings").then(({ data }) => setSettings(data && typeof data === "object" ? data : {})),
+    []
+  );
+  const loadAlarms = useCallback(
+    () =>
+      http
+        .get("/alarms")
+        .then(({ data }) => {
+          if (Array.isArray(data)) setAlarms(data);
+        })
+        .catch(() => {}),
+    []
+  );
 
   const patch = useCallback((p) => {
     setSettings((s) => ({ ...s, ...p }));
@@ -84,7 +105,12 @@ export default function Terminal() {
 
   useEffect(() => {
     loadSettings().catch(() => setSettings({}));
-    http.get("/market/symbols").then(({ data }) => setSymbols(data));
+    http
+      .get("/market/symbols")
+      .then(({ data }) => {
+        if (Array.isArray(data)) setSymbols(data);
+      })
+      .catch(() => {});
     loadAlarms();
     refreshPushIfGranted();
     return market.onStatus(setLive);
@@ -92,7 +118,12 @@ export default function Terminal() {
 
   useEffect(() => {
     if (!settings) return;
-    http.get("/drawings", { params: { symbol } }).then(({ data }) => setDrawings(data));
+    http
+      .get("/drawings", { params: { symbol } })
+      .then(({ data }) => {
+        if (Array.isArray(data)) setDrawings(data);
+      })
+      .catch(() => {});
   }, [symbol, !!settings]); // eslint-disable-line
 
   // cross-device sync socket
@@ -103,7 +134,7 @@ export default function Terminal() {
       ws = new WebSocket(`${BACKEND_URL.replace(/^http/, "ws")}/api/ws?client_id=${CLIENT_ID}`);
       ws.onmessage = (ev) => {
         const m = JSON.parse(ev.data);
-        if (m.type === "settings") loadSettings();
+        if (m.type === "settings") loadSettings().catch(() => {});
         if (m.type === "alarms") loadAlarms();
         if (m.type === "drawing_upsert" && m.drawing.symbol === symRef.current) setDrawings((l) => [...l.filter((d) => d.id !== m.drawing.id), m.drawing]);
         if (m.type === "drawing_delete") setDrawings((l) => l.filter((d) => d.id !== m.id));
@@ -144,12 +175,16 @@ export default function Terminal() {
     const prec = symMap[symRef.current]?.precision ?? 2;
     try {
       const { data } = await http.post("/alarms", { symbol: symRef.current, price, price_str: fmtPrice(price, prec) });
-      setAlarms((l) => [data, ...l]);
-      toast.success(`Alarm kuruldu: ${data.symbol} ${data.price_str}`);
+      if (data && data.id) {
+        setAlarms((l) => [data, ...l]);
+        toast.success(`Alarm kuruldu: ${data.symbol} ${data.price_str}`);
+      } else {
+        toast.error("Alarm kurulamadı");
+      }
     } catch (e) { toast.error("Alarm kurulamadı"); }
   }, [symMap]);
   const deleteAlarm = useCallback((id) => { setAlarms((l) => l.filter((a) => a.id !== id)); http.delete(`/alarms/${id}`).catch(() => {}); }, []);
-  const clearTriggered = () => { setAlarms((l) => l.filter((a) => a.status === "active")); http.delete("/alarms"); };
+  const clearTriggered = () => { setAlarms((l) => l.filter((a) => a.status === "active")); http.delete("/alarms").catch(() => {}); };
 
   const selectSymbol = (s) => { patch({ last_symbol: s }); if (isMobile) setSheet(false); };
   const setInd = (k, v) => patch({ indicators: { ...(settings?.indicators || {}), [k]: v } });
