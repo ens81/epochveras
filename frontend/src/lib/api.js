@@ -4,6 +4,7 @@ export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 export const CLIENT_ID = (window.crypto?.randomUUID?.() || String(Math.random())).slice(0, 36);
 
+
 export const http = axios.create({ baseURL: API });
 
 http.interceptors.request.use((cfg) => {
