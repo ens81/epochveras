@@ -16,6 +16,7 @@ export const EPOCH_DEFAULTS = {
   showDivergence: true, rsiLen: 14, maType: "sma", maLen: 200, zigzagLen: 13, showPivotLabels: false,
 };
 
+
 export const EPOCH_SCHEMA = [
   ["EMA 100/200/300", [["showEma3", "Göster", "bool"], ["ema1Len", "EMA 1", "int"], ["ema1Color", "", "color"], ["ema2Len", "EMA 2", "int"], ["ema2Color", "", "color"], ["ema3Len", "EMA 3", "int"], ["ema3Color", "", "color"]]],
   ["EMA Bulutu", [["emaFast", "Hızlı EMA", "int"], ["emaSlow", "Yavaş EMA", "int"], ["showEmaCloud", "Bulut", "bool"], ["cloudColor", "Bulut rengi", "color"], ["cloudOpacity", "Bulut opaklık", "float"], ["emaUpColor", "Yükseliş", "color"], ["emaDownColor", "Düşüş", "color"]]],
