@@ -52,3 +52,4 @@ export const roundTick = (p, tick) => {
   const dec = (String(tick).split(".")[1] || "").replace(/0+$/, "").length;
   return Number((Math.round(p / t) * t).toFixed(dec));
 };
+
