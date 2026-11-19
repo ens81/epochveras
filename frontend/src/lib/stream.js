@@ -8,6 +8,7 @@ class MarketStream {
     this.open = false;
     this.listeners = new Set();
   }
+
   
   ensure() {
     if (this.ws) return;
