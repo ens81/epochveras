@@ -15,7 +15,6 @@ export const CAKMA_SCHEMA = [
   ["ATR", [["showAtr", "ATR tablosu", "bool"], ["atrLen", "ATR uzunluk", "int"]]],
 ];
 
-
 export function computeCakma(bars, c) {
   if (bars.length < 5) return null;
   const close = bars.map((b) => b.close);
