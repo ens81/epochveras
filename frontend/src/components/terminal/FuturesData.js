@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { http, fmtPrice, fmtCountdown } from "../../lib/api";
 
-
 function Ratio({ title, d, testid }) {
   const L = d ? Number(d.longAccount) * 100 : null, S = d ? Number(d.shortAccount) * 100 : null;
   return (
