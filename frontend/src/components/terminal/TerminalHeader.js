@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Search, AlarmClock, FunctionSquare } from "lucide-react";
-import { UserButton } from "@clerk/react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { TIMEFRAMES, fmtPrice, fmtPct, roundTick } from "../../lib/api";
 
@@ -96,7 +95,6 @@ export default function TerminalHeader({ symbol, meta, ticker, tf, setTf, onIndi
       <span className="hidden md:flex items-center gap-1.5 text-[11px] text-[#787B86] shrink-0" data-testid="stream-status" title={live ? "Canlı akış bağlı" : "Yoklama modunda"}>
         <span className={`h-1.5 w-1.5 rounded-full ${live ? "bg-[#089981]" : "bg-[#F5A623]"}`} />{live ? "Canlı" : "Yoklama"} · {utc()}
       </span>
-      <div className="ml-2 shrink-0" data-testid="user-menu"><UserButton /></div>
     </header>
   );
 }
