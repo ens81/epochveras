@@ -16,6 +16,7 @@ import AlarmsPanel from "../components/terminal/AlarmsPanel";
 import FuturesData from "../components/terminal/FuturesData";
 import IndicatorsDialog from "../components/terminal/IndicatorsDialog";
 
+
 const DEFAULT_LAYOUT = { panelOpen: true, width: 440, magnet: true, modules: { watchlist: { open: true, height: 380 }, alarms: { open: true, height: 190 }, futures: { open: true } } };
 const DEFAULT_FAV = { tab: "all", groups: [{ id: "fav", name: "Favoriler", symbols: ["BTCUSDT", "ETHUSDT", "SOLUSDT"] }] };
 
