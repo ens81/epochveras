@@ -13,7 +13,6 @@ except ModuleNotFoundError:
 log = logging.getLogger("alarms")
 WS = os.environ["BINANCE_WS"]
 
-
 class Hub:
     def __init__(self):
         self.conns = {}
