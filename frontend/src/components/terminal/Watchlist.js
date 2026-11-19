@@ -6,6 +6,7 @@ import { fmtPrice, fmtPct, fmtVol } from "../../lib/api";
 const ROW = 30;
 const COLS = [["symbol", "Sembol", "text-left"], ["c", "Son", "text-right"], ["P", "%", "text-right"], ["qv", "Hacim", "text-right"], ["r", "Funding", "text-right"]];
 
+
 export default function Watchlist({ symbols, tickers, favorites, onFavorites, symbol, onSelect }) {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState({ key: "qv", dir: -1 });
