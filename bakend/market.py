@@ -11,7 +11,6 @@ _cache = {}
 INTERVALS = {"1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h", "1d", "1w"}
 _locks = {}
 
-
 async def get_json(path, params=None, ttl=0):
     key = (path, tuple(sorted((params or {}).items())))
     hit = _cache.get(key)
