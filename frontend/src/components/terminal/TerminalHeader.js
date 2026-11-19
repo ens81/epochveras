@@ -98,3 +98,4 @@ export default function TerminalHeader({ symbol, meta, ticker, tf, setTf, onIndi
     </header>
   );
 }
+
