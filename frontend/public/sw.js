@@ -38,3 +38,4 @@ self.addEventListener("notificationclick", (e) => {
     return w ? w.focus() : self.clients.openWindow("/");
   }));
 });
+
