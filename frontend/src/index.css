@@ -56,3 +56,4 @@ button { -webkit-tap-highlight-color: transparent; }
 .chart-legend { font-size: 12px; line-height: 19px; color: #B2B5BE; font-variant-numeric: tabular-nums; text-shadow: 0 0 3px #000; }
 .chart-legend .lg-title { color: #E0E3EB; font-size: 13px; }
 .chart-legend b { font-weight: 400; }
+
