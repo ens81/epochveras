@@ -42,7 +42,6 @@ class Point(BaseModel):
     time: float
     price: float
 
-
 class Drawing(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     symbol: str
