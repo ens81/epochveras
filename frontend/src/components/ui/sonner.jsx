@@ -26,4 +26,3 @@ const Toaster = ({
 }
 
 export { Toaster, toast }
-
