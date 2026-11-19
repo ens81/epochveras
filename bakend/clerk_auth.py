@@ -50,7 +50,6 @@ def _client_ip(request: Request) -> str:
         return forwarded.split(",")[0].strip()
     return request.client.host if request.client else ""
 
-
 @clerk_router.get("/clerk/config")
 def clerk_config():
     """What the frontend needs to start Clerk (the publishable key is public)."""
