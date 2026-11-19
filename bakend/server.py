@@ -15,11 +15,9 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field
 
 try:
-    from backend.clerk_auth import clerk_router, require_user
     from backend.market import router as market_router, last_prices
     from backend.alarms import Hub, AlarmEngine
 except ModuleNotFoundError:
-    from clerk_auth import clerk_router, require_user
     from market import router as market_router, last_prices
     from alarms import Hub, AlarmEngine
 
@@ -37,6 +35,11 @@ hub = Hub()
 engine = AlarmEngine(db, hub)
 
 SETTING_KEYS = {"layout", "favorites", "drawing_styles", "indicators", "last_symbol", "last_tf", "sound"}
+
+
+async def require_user(x_client_id: str = Header(default="")):
+    uid = (x_client_id or "default_user")[:64]
+    return {"user_id": uid}
 
 
 def now():
@@ -206,7 +209,6 @@ async def ws_endpoint(ws: WebSocket, token: str = "", client_id: str = ""):
 
 app.include_router(api)
 app.include_router(market_router)
-app.include_router(clerk_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
