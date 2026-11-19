@@ -12,6 +12,7 @@ function label(ctx, text, x, y, color, above, size = 10) {
   text.split("\n").forEach((t, k, arr) => ctx.fillText(t, x, above ? y - 4 - (arr.length - 1 - k) * (size + 2) : y + 4 + k * (size + 2)));
 }
 
+
 // Pine label.style_label_down / style_label_up: filled box with a pointer towards the bar
 function pinLabel(ctx, text, x, y, color, above, size = 10) {
   ctx.font = `600 ${size}px -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif`;
